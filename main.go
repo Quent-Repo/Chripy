@@ -18,8 +18,10 @@ func middlewareCors(next http.Handler) http.Handler {
 }
 
 func main() {
+	const filepathRoot = "."
 	mux := http.NewServeMux()
 	corsMux := middlewareCors(mux)
+	mux.Handle("/", http.FileServer(http.Dir(filepathRoot)))
 	r := http.Server{
 		Addr:    ":8080",
 		Handler: corsMux,
